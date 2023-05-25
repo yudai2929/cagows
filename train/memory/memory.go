@@ -53,6 +53,7 @@ func (m *TodoMemory) Get(id int) (*model.Todo, error) {
 
 func (m *TodoMemory) Add(todo *model.Todo) *model.Todo {
 	// TODO: 排他制御を書いてみよう
+	m.Lock()
 
 	id := len(m.mem) + 1
 	todo.ID = id
@@ -65,7 +66,12 @@ func (m *TodoMemory) Complete(id int) error {
 	defer m.Unlock()
 
 	// TODO: 存在しなかったらエラーを返そう
+	if _, ok := m.mem[id]; !ok {
+		return errors.New("not found")
+	}
 
 	// TODO: 存在していたらCompletedをtrueにしよう
+	m.mem[id].Completed = true
+
 	return nil
 }

@@ -125,6 +125,19 @@ func TestTodoMemory_Add(t *testing.T) {
 		wantErr bool
 	}{
 		// TODO: ここにTodoを追加できた場合のテストを書く
+		{
+			name: "正常系: データ追加",
+			todo: &model.Todo{
+				Title:     "test1",
+				Completed: false,
+			},
+			want: &model.Todo{
+				ID:        1,
+				Title:     "test1",
+				Completed: false,
+			},
+			wantErr: false,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
